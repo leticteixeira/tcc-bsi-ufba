@@ -1,0 +1,17 @@
+import pandas as pd
+
+# Ler colunas de 2010 (base de comparação)
+colunas_2010 = pd.read_excel("2010.xlsx", nrows=0).columns
+
+# Comparar com os outros anos
+for ano in range(2011, 2025):
+    try:
+        colunas = pd.read_excel(f"{ano}.xlsx", nrows=0).columns
+
+        if list(colunas) == list(colunas_2010):
+            print(f"{ano}: ✅ mesmas colunas de 2010")
+        else:
+            print(f"{ano}: ❌ colunas diferentes de 2010")
+
+    except Exception as e:
+        print(f"{ano}: erro -> {e}")
