@@ -1,0 +1,40 @@
+import pandas as pd
+
+
+# Base de comparação (2010)
+colunas_base = set(pd.read_excel("2010.xlsx", nrows=0).columns)
+
+
+# Comparar com os outros anos
+for ano in range(2010, 2025):
+    try:
+        print(f"\n📅 {ano}")
+
+
+        colunas_ano = set(pd.read_excel(f"{ano}.xlsx", nrows=0).columns)
+
+
+        faltando = colunas_base - colunas_ano
+        extras = colunas_ano - colunas_base
+
+
+        if not faltando and not extras:
+            print("✅ Mesmas colunas de 2010")
+        else:
+            print("❌ Colunas diferentes de 2010")
+
+
+            if faltando:
+                print("   ➜ Faltando em relação a 2010:")
+                for col in faltando:
+                    print(f"     - {col}")
+
+
+            if extras:
+                print("   ➜ Colunas extras (que só existem nesse ano):")
+                for col in extras:
+                    print(f"     - {col}")
+
+
+    except Exception as e:
+        print(f"{ano}: erro -> {e}")
